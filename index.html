@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pontualiza - Sistema de Gestão de Ponto</title>
+    <link rel="icon" href="logo.jpeg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="logo.jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-layout="guest">
+
+    <div id="app-guest" class="layout-portal">
+        <aside class="portal-hero">
+            <div class="brand-mini">
+                <img src="logo.jpeg" alt="Pontualiza">
+            </div>
+            <h1 id="hero-titulo">Gestão de ponto,<br>simples e precisa.</h1>
+            <p id="hero-texto">Acesse sua jornada de trabalho com segurança, agilidade e transparência.</p>
+            <ul class="pills">
+                <li>Seguro</li>
+                <li>Ágil</li>
+                <li>Confiável</li>
+            </ul>
+            <p class="hero-foot">© 2026 Pontualiza · Eficiência em foco</p>
+        </aside>
+
+        <div class="portal-painel">
+            <section id="escolha">
+                <p class="kicker">Portal de acesso</p>
+                <h2>Como você deseja acessar?</h2>
+                <p class="subtitulo">Selecione seu perfil para entrar na conta ou realizar um novo cadastro.</p>
+                <div class="perfil-cards">
+                    <article class="perfil-card">
+                        <div class="perfil-icone perfil-icone-func">👤</div>
+                        <h3>Funcionário</h3>
+                        <p>Consulte registros, horários e informações da sua jornada.</p>
+                        <button type="button" class="btn-primario" data-ir="login" data-perfil="colaborador">Entrar</button>
+                        <button type="button" class="btn-outline" data-ir="cadastro" data-perfil="colaborador">Criar cadastro</button>
+                    </article>
+                    <article class="perfil-card perfil-card-admin">
+                        <div class="perfil-icone perfil-icone-admin">🛡️</div>
+                        <h3>Administrador</h3>
+                        <p>Gerencie equipes, permissões e relatórios da empresa.</p>
+                        <p class="aviso-desktop">Painel disponível apenas no computador.</p>
+                        <button type="button" class="btn-verde" data-ir="login" data-perfil="admin">Entrar</button>
+                        <button type="button" class="btn-outline-verde" data-ir="cadastro" data-perfil="admin">Criar cadastro</button>
+                    </article>
+                </div>
+                <p class="ajuda">Precisa de ajuda para acessar? <a href="#">Fale com o suporte</a></p>
+            </section>
+
+            <section id="login" class="hidden">
+                <p class="kicker">Entrar</p>
+                <h2 id="login-titulo">Acesse sua conta</h2>
+                <p class="dica">Funcionário: <code>colaborador@pontualiza.com</code> / <code>123456</code><br>Admin (desktop): <code>admin@pontualiza.com</code> / <code>admin123</code></p>
+                <form id="form-login">
+                    <input type="hidden" id="login-perfil" value="colaborador">
+                    <div>
+                        <label for="login-email">E-mail profissional</label>
+                        <input type="email" id="login-email" placeholder="nome@empresa.com.br" required>
+                    </div>
+                    <div>
+                        <label for="login-senha">Senha</label>
+                        <input type="password" id="login-senha" required>
+                    </div>
+                    <p id="login-msg" class="msg hidden"></p>
+                    <button type="submit" class="btn-primario btn-bloco">Entrar</button>
+                </form>
+                <button type="button" class="btn-link" data-ir="escolha">Voltar ao portal</button>
+            </section>
+
+            <section id="cadastro" class="hidden tela-cadastro">
+                <p class="kicker" id="cadastro-kicker">Novo acesso de funcionário</p>
+                <h2 id="cadastro-titulo">Crie seu cadastro</h2>
+                <p class="subtitulo" id="cadastro-subtitulo">Seu acesso será individual e ficará vinculado à empresa informada.</p>
+                <div class="stepper hidden" id="stepper-admin">
+                    <div class="step ativo">
+                        <span class="step-num">1</span>
+                        <div>
+                            <strong>Empresa e responsável</strong>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <strong>Concluir</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-form">
+                <form id="form-cadastro">
+                    <input type="hidden" id="cad-perfil" name="perfil" value="colaborador">
+                    <div id="campos-empresa-func" class="bloco-vinculo">
+                        <div class="vinculo-head">
+                            <span class="vinculo-ico">🏢</span>
+                            <div>
+                                <h3>Vínculo obrigatório com a empresa</h3>
+                                <p class="hint">Use o código fornecido pelo administrador.</p>
+                            </div>
+                        </div>
+                        <label for="cad-codigo">Código da empresa</label>
+                        <input type="text" id="cad-codigo" placeholder="Ex.: PTZ-48291">
+                        <p class="hint">Este código identifica onde seus registros de ponto serão armazenados.</p>
+                    </div>
+                    <div id="campos-empresa-admin" class="hidden">
+                        <div class="vinculo-head">
+                            <span class="vinculo-ico ico-verde">🏢</span>
+                            <div>
+                                <h3>Dados da empresa</h3>
+                                <p class="hint">Dados usados para identificar sua organização.</p>
+                            </div>
+                        </div>
+                        <label for="cad-razao">Razão social</label>
+                        <input type="text" id="cad-razao" placeholder="Digite a razão social">
+                        <div class="grid-2">
+                            <div>
+                                <label for="cad-cnpj">CNPJ</label>
+                                <input type="text" id="cad-cnpj" placeholder="00.000.000/0000-00">
+                            </div>
+                            <div>
+                                <label for="cad-fantasia">Nome fantasia</label>
+                                <input type="text" id="cad-fantasia" placeholder="Como sua empresa é conhecida">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bloco-campos">
+                        <div class="vinculo-head">
+                            <span class="vinculo-ico ico-azul hidden" id="ico-responsavel">👤</span>
+                            <div>
+                                <h3 id="bloco-dados-titulo">Dados essenciais</h3>
+                                <p class="hint hidden" id="hint-responsavel">Este perfil terá permissões de gestão da empresa.</p>
+                            </div>
+                        </div>
+                        <div class="grade-dados">
+                            <div class="span-2" id="wrap-nome">
+                                <label for="cad-nome">Nome completo</label>
+                                <input type="text" id="cad-nome" placeholder="Digite seu nome completo" required>
+                            </div>
+                            <div id="campo-cpf">
+                                <label for="cad-doc">CPF · identificação única</label>
+                                <input type="text" id="cad-doc" placeholder="000.000.000-00" required>
+                            </div>
+                            <div>
+                                <label for="cad-email">E-mail profissional</label>
+                                <input type="email" id="cad-email" placeholder="nome@empresa.com.br" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bloco-campos">
+                        <h3 id="titulo-credenciais">Credenciais de acesso</h3>
+                        <div class="grid-2">
+                            <div>
+                                <label for="cad-senha">Senha</label>
+                                <input type="password" id="cad-senha" minlength="8" placeholder="Mínimo de 8 caracteres" required>
+                            </div>
+                            <div>
+                                <label for="cad-senha2">Confirmar senha</label>
+                                <input type="password" id="cad-senha2" minlength="8" placeholder="Digite a senha novamente" required>
+                            </div>
+                        </div>
+                        <p class="hint">Use letras maiúsculas, minúsculas, números e um caractere especial.</p>
+                    </div>
+                    <label id="aceite-termos" class="aceite hidden">
+                        <input type="checkbox" id="cad-termos">
+                        Li e aceito os Termos de uso e a Política de privacidade da Pontualiza.
+                    </label>
+                    <p id="cadastro-msg" class="msg hidden"></p>
+                    <button type="submit" class="btn-cadastro" id="cadastro-submit">Criar cadastro de funcionário →</button>
+                </form>
+                </div>
+                <p class="cadastro-login">Já possui conta como funcionário? <button type="button" class="btn-link" data-ir="login" data-perfil="colaborador" id="cadastro-voltar">Entrar</button></p>
+            </section>
+        </div>
+    </div>
+
+    <div id="app-logado" class="layout-app hidden">
+        <aside class="sidebar">
+            <div class="logo-card">
+                <img src="logo.jpeg" alt="Pontualiza">
+            </div>
+            <nav>
+                <ul>
+                    <li data-auth class="hidden"><a href="#ponto"><span class="nav-ico">⌂</span> Início</a></li>
+                    <li data-auth class="hidden"><a href="#ponto"><span class="nav-ico">⏱</span> Meu ponto</a></li>
+                    <li data-auth class="hidden"><a href="#calendario"><span class="nav-ico">▦</span> Calendário</a></li>
+                    <li data-auth class="hidden"><a href="#historico"><span class="nav-ico">☰</span> Histórico</a></li>
+                    <li data-auth class="hidden"><a href="#perfil"><span class="nav-ico">👤</span> Perfil</a></li>
+                    <li data-admin class="hidden"><a href="#admin"><span class="nav-ico">⌂</span> Visão geral</a></li>
+                    <li data-admin class="hidden"><a href="#admin"><span class="nav-ico">👥</span> Funcionários</a></li>
+                    <li data-admin class="hidden"><a href="#admin"><span class="nav-ico">⏱</span> Registros de ponto</a></li>
+                    <li data-admin class="hidden"><a href="#admin"><span class="nav-ico">▤</span> Frequência</a></li>
+                    <li data-admin class="hidden"><a href="#admin"><span class="nav-ico">☰</span> Relatórios</a></li>
+                    <li data-admin class="hidden"><a href="#admin"><span class="nav-ico">⚙</span> Configurações</a></li>
+                </ul>
+            </nav>
+            <div id="user-bar" class="user-bar hidden">
+                <button type="button" id="btn-sair" class="btn-sair">→ Sair</button>
+            </div>
+        </aside>
+
+        <div class="coluna-direita">
+        <header class="topbar">
+            <span id="app-kicker">Área do Funcionário</span>
+            <div class="topbar-acoes">
+                <span class="sino" aria-hidden="true">🔔</span>
+                <div class="user-chip">
+                    <div class="avatar" id="avatar-iniciais">LR</div>
+                    <div>
+                        <strong id="user-saudacao">Lucas Rocha</strong>
+                        <span id="user-papel">Funcionário</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="app-conteudo">
+            <header class="app-topo">
+                <div>
+                    <h2 id="saudacao-titulo">Olá!</h2>
+                    <p class="subtitulo" id="saudacao-texto">Bons resultados começam com um bom controle de ponto.</p>
+                </div>
+                <div class="admin-toolbar hidden" data-admin>
+                    <button type="button" class="btn-verde" id="btn-cad-func">+ Cadastrar funcionário</button>
+                    <button type="button" class="btn-outline-verde">Gerar relatório</button>
+                </div>
+            </header>
+
+            <main>
+                <section id="ponto" class="hidden painel-inicio">
+                    <div class="inicio-grid">
+                        <div class="col-esq">
+                            <article class="card card-ponto">
+                                <div class="icone-relogio">⏱</div>
+                                <h3>Bater Ponto</h3>
+                                <p>Registre sua entrada ou saída do dia.</p>
+                                <form id="form-ponto">
+                                    <p id="ponto-msg" class="msg hidden"></p>
+                                    <button type="submit" class="btn-ponto">Bater Ponto</button>
+                                </form>
+                            </article>
+                            <div class="kpi-row">
+                                <article class="card kpi">
+                                    <span>Última entrada</span>
+                                    <strong id="kpi-entrada">--:--</strong>
+                                    <small id="kpi-entrada-data">—</small>
+                                </article>
+                                <article class="card kpi">
+                                    <span>Última saída</span>
+                                    <strong id="kpi-saida">--:--</strong>
+                                    <small id="kpi-saida-data">—</small>
+                                </article>
+                                <article class="card kpi">
+                                    <span>Horas do dia</span>
+                                    <strong id="kpi-horas">0h 00min</strong>
+                                    <small>Balanço: 00:00</small>
+                                </article>
+                                <article class="card kpi">
+                                    <span>Dias trabalhados</span>
+                                    <strong id="kpi-dias">0</strong>
+                                    <small id="kpi-status">—</small>
+                                </article>
+                            </div>
+                            <div class="faixa-ultimo">
+                                <span class="ponto-verde"></span>
+                                <p id="ultimo-registro">Último registro: —</p>
+                            </div>
+                            <a href="#calendario" class="link-interno" id="link-controle">Ver controle de horário →</a>
+                        </div>
+                        <div class="col-dir">
+                            <article class="card card-cal-mini">
+                                <div class="cal-toolbar">
+                                    <span>‹</span>
+                                    <strong id="titulo-mini-mes">Calendário</strong>
+                                    <span>›</span>
+                                </div>
+                                <table class="cal-mini">
+                                    <thead>
+                                        <tr><th>Do</th><th>Se</th><th>Te</th><th>Qa</th><th>Qi</th><th>Sx</th><th>Sa</th></tr>
+                                    </thead>
+                                    <tbody id="tbody-mini-cal"></tbody>
+                                </table>
+                            </article>
+                            <article class="card card-registros">
+                                <div class="card-head">
+                                    <h3>Últimos registros</h3>
+                                    <a href="#historico" class="link-interno">Ver histórico completo →</a>
+                                </div>
+                                <ul id="lista-hoje"></ul>
+                                <div class="card-foot">
+                                    <small id="registros-contagem">Exibindo 0 registros</small>
+                                    <a href="#historico" class="link-interno">Ver todos →</a>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="calendario" class="hidden card">
+                    <h3 id="titulo-mes">Calendário</h3>
+                    <div class="tabela-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-calendario"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="historico" class="hidden card">
+                    <h3>Histórico detalhado</h3>
+                    <div class="tabela-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Horário</th>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                    <th>Horas</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-historico"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="perfil" class="hidden card">
+                    <h3>Perfil</h3>
+                    <p id="perfil-nome"></p>
+                    <p id="perfil-email" class="hint"></p>
+                </section>
+
+                <section id="admin" class="hidden painel-admin">
+                    <div class="kpi-row kpi-admin">
+                        <article class="card kpi">
+                            <span><i class="dot dot-azul"></i> Funcionários</span>
+                            <strong id="admin-total">0</strong>
+                            <small id="admin-total-det">Colaboradores cadastrados</small>
+                        </article>
+                        <article class="card kpi">
+                            <span><i class="dot dot-verde"></i> Presentes hoje</span>
+                            <strong id="admin-hoje">0</strong>
+                            <small id="admin-perc">— da equipe</small>
+                        </article>
+                        <article class="card kpi">
+                            <span><i class="dot dot-laranja"></i> Faltas e atrasos</span>
+                            <strong id="admin-faltas">0</strong>
+                            <small id="admin-faltas-det">—</small>
+                        </article>
+                        <article class="card kpi">
+                            <span><i class="dot dot-ciano"></i> Horas trabalhadas</span>
+                            <strong id="admin-horas">0h</strong>
+                            <small id="data-atual">Hoje</small>
+                        </article>
+                    </div>
+                    <div class="admin-meio">
+                        <article class="card card-freq">
+                            <div class="card-head">
+                                <h3>Frequência de hoje</h3>
+                                <small id="admin-freq-data"></small>
+                            </div>
+                            <div class="freq-bar">
+                                <i id="freq-presentes"></i>
+                                <i id="freq-atrasos"></i>
+                                <i id="freq-faltas"></i>
+                            </div>
+                            <div class="legenda" id="admin-legenda"></div>
+                            <p class="hint" id="admin-atualizado"></p>
+                        </article>
+                        <article class="card card-alertas">
+                            <div class="card-head">
+                                <h3>Alertas e pendências</h3>
+                                <span class="badge badge-falta" id="admin-alertas-n">0</span>
+                            </div>
+                            <ul class="alertas" id="admin-alertas"></ul>
+                        </article>
+                    </div>
+                    <article class="card card-registros-admin">
+                        <div class="card-head">
+                            <h3>Registros recentes</h3>
+                            <div class="filtros">
+                                <span>Funcionário: Todos</span>
+                                <span>Data: Hoje</span>
+                                <span>Situação: Todas</span>
+                                <a href="#admin" class="link-interno">Ver todos →</a>
+                            </div>
+                        </div>
+                        <div class="tabela-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Funcionário</th>
+                                        <th>Setor</th>
+                                        <th>Entrada</th>
+                                        <th>Saída</th>
+                                        <th>Situação</th>
+                                        <th>Horas</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-admin"></tbody>
+                            </table>
+                        </div>
+                    </article>
+                </section>
+
+                <section id="admin-bloqueio" class="hidden card card-bloqueio">
+                    <h2>Painel disponível só no computador</h2>
+                    <p>A tela de administrador não pode ser acessada no celular. Abra o Pontualiza no desktop para gerenciar equipes, permissões e relatórios.</p>
+                    <button type="button" id="btn-sair-mobile-admin" class="btn-primario">Sair da conta</button>
+                </section>
+            </main>
+
+            <footer>
+                <p>© 2026 Pontualiza · Eficiência em foco · Privacidade e segurança</p>
+            </footer>
+        </div>
+        </div>
+    </div>
+
+    <p class="rodape-guest" id="rodape-guest">© 2026 Pontualiza · Eficiência em foco · Privacidade e segurança</p>
+    <script src="script.js"></script>
+</body>
+</html>
